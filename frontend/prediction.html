@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parkinson's Prediction</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Parkinson's Prediction</h1>
+        <nav>
+          <ul>
+            <li><a href="chatbot.html">Chatbot</a></li>
+            <li><a href="prediction.html" class="active">Prediction</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="prediction-form-container">
+        <h2>Enter Patient Voice Features</h2>
+        <form id="prediction-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="MDVP:Fo(Hz)"
+                >MDVP:Fo(Hz) (Average vocal fundamental frequency):</label
+              >
+              <input
+                type="number"
+                id="MDVP:Fo(Hz)"
+                name="MDVP:Fo(Hz)"
+                step="any"
+                required
+              />
+              <small>e.g., 152.668505</small>
+            </div>
+            <div class="form-group">
+              <label for="MDVP:Fhi(Hz)"
+                >MDVP:Fhi(Hz) (Maximum vocal fundamental frequency):</label
+              >
+              <input
+                type="number"
+                id="MDVP:Fhi(Hz)"
+                name="MDVP:Fhi(Hz)"
+                step="any"
+                required
+              />
+              <small>e.g., 567.885678</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="MDVP:Flo(Hz)"
+                >MDVP:Flo(Hz) (Minimum vocal fundamental frequency):</label
+              >
+              <input
+                type="number"
+                id="MDVP:Flo(Hz)"
+                name="MDVP:Flo(Hz)"
+                step="any"
+                required
+              />
+              <small>e.g., 192.618956</small>
+            </div>
+            <div class="form-group">
+              <label for="MDVP:Jitter(%)"
+                >MDVP:Jitter(%) (Measure of variation in fundamental
+                frequency):</label
+              >
+              <input
+                type="number"
+                id="MDVP:Jitter(%)"
+                name="MDVP:Jitter(%)"
+                step="any"
+                required
+              />
+              <small>e.g., 0.020526</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="MDVP:Jitter(Abs)"
+                >MDVP:Jitter(Abs) (Absolute jitter):</label
+              >
+              <input
+                type="number"
+                id="MDVP:Jitter(Abs)"
+                name="MDVP:Jitter(Abs)"
+                step="any"
+                required
+              />
+              <small>e.g., 0.000046</small>
+            </div>
+            <div class="form-group">
+              <label for="MDVP:RAP"
+                >MDVP:RAP (Relative Average Perturbation):</label
+              >
+              <input
+                type="number"
+                id="MDVP:RAP"
+                name="MDVP:RAP"
+                step="any"
+                required
+              />
+              <small>e.g., 0.003918</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="MDVP:PPQ"
+                >MDVP:PPQ (Five-point Period Perturbation Quotient):</label
+              >
+              <input
+                type="number"
+                id="MDVP:PPQ"
+                name="MDVP:PPQ"
+                step="any"
+                required
+              />
+              <small>e.g., 0.002004</small>
+            </div>
+            <div class="form-group">
+              <label for="Jitter:DDP">Jitter:DDP (DDP of jitter):</label>
+              <input
+                type="number"
+                id="Jitter:DDP"
+                name="Jitter:DDP"
+                step="any"
+                required
+              />
+              <small>e.g., 0.055994</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="MDVP:Shimmer"
+                >MDVP:Shimmer (Measure of variation in amplitude):</label
+              >
+              <input
+                type="number"
+                id="MDVP:Shimmer"
+                name="MDVP:Shimmer"
+                step="any"
+                required
+              />
+              <small>e.g., 0.075386</small>
+            </div>
+            <div class="form-group">
+              <label for="MDVP:Shimmer(dB)"
+                >MDVP:Shimmer(dB) (Shimmer in dB):</label
+              >
+              <input
+                type="number"
+                id="MDVP:Shimmer(dB)"
+                name="MDVP:Shimmer(dB)"
+                step="any"
+                required
+              />
+              <small>e.g., 0.946724</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="Shimmer:APQ3"
+                >Shimmer:APQ3 (Three-point Amplitude Perturbation
+                Quotient):</label
+              >
+              <input
+                type="number"
+                id="Shimmer:APQ3"
+                name="Shimmer:APQ3"
+                step="any"
+                required
+              />
+              <small>e.g., 0.005619</small>
+            </div>
+            <div class="form-group">
+              <label for="Shimmer:APQ5"
+                >Shimmer:APQ5 (Five-point Amplitude Perturbation
+                Quotient):</label
+              >
+              <input
+                type="number"
+                id="Shimmer:APQ5"
+                name="Shimmer:APQ5"
+                step="any"
+                required
+              />
+              <small>e.g., 0.077182</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="MDVP:APQ"
+                >MDVP:APQ (Average Periodicity Quotient):</label
+              >
+              <input
+                type="number"
+                id="MDVP:APQ"
+                name="MDVP:APQ"
+                step="any"
+                required
+              />
+              <small>e.g., 0.115899</small>
+            </div>
+            <div class="form-group">
+              <label for="Shimmer:DDA">Shimmer:DDA (DDA of shimmer):</label>
+              <input
+                type="number"
+                id="Shimmer:DDA"
+                name="Shimmer:DDA"
+                step="any"
+                required
+              />
+              <small>e.g., 0.046718</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="NHR">NHR (Noise-to-Harmonic Ratio):</label>
+              <input type="number" id="NHR" name="NHR" step="any" required />
+              <small>e.g., 0.057774</small>
+            </div>
+            <div class="form-group">
+              <label for="HNR">HNR (Harmonic-to-Noise Ratio):</label>
+              <input type="number" id="HNR" name="HNR" step="any" required />
+              <small>e.g., 12.953851</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="RPDE"
+                >RPDE (Recurrence Period Density Entropy):</label
+              >
+              <input type="number" id="RPDE" name="RPDE" step="any" required />
+              <small>e.g., 0.386962</small>
+            </div>
+            <div class="form-group">
+              <label for="DFA">DFA (Detrended Fluctuation Analysis):</label>
+              <input type="number" id="DFA" name="DFA" step="any" required />
+              <small>e.g., 0.705999</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="spread1"
+                >spread1 (Nonlinear dynamical complexity measure):</label
+              >
+              <input
+                type="number"
+                id="spread1"
+                name="spread1"
+                step="any"
+                required
+              />
+              <small>e.g., -5.575916</small>
+            </div>
+            <div class="form-group">
+              <label for="spread2"
+                >spread2 (Nonlinear dynamical complexity measure):</label
+              >
+              <input
+                type="number"
+                id="spread2"
+                name="spread2"
+                step="any"
+                required
+              />
+              <small>e.g., 0.135644</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="D2">D2 (Correlation Dimension):</label>
+              <input type="number" id="D2" name="D2" step="any" required />
+              <small>e.g., 2.798652</small>
+            </div>
+            <div class="form-group">
+              <label for="PPE">PPE (Pitch Period Entropy):</label>
+              <input type="number" id="PPE" name="PPE" step="any" required />
+              <small>e.g., 0.111891</small>
+            </div>
+          </div>
+          <button type="submit" class="submit-button">Get Prediction</button>
+        </form>
+        <div id="prediction-result" class="prediction-result"></div>
+        <div id="error-message" class="error-message"></div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2024 Parkinson's Chatbot. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="js/prediction.js"></script>
+  </body>
+</html>
