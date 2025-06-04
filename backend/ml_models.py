@@ -16,32 +16,59 @@ def train_and_save_model():
     # Define paths
     data_dir = 'backend/data'
     models_dir = 'backend/models'
-    csv_file_path = os.path.join(data_dir, 'parkinsons_hospital.csv')
+    
+    parkinsons_hospital_path = os.path.join(data_dir, 'parkinsons_hospital.csv')
+    parkinsson_data_path = os.path.join(data_dir, 'Parkinsson_data.csv')
     
     # Create directories if they don't exist
     os.makedirs(data_dir, exist_ok=True)
     os.makedirs(models_dir, exist_ok=True)
 
-    print(f"Loading data from: {csv_file_path}")
+    print(f"Loading data from: {parkinsons_hospital_path} and {parkinsson_data_path}")
     try:
-        df = pd.read_csv(csv_file_path)
+        df_hospital = pd.read_csv(parkinsons_hospital_path)
+        df_data = pd.read_csv(parkinsson_data_path)
         print("Data loaded successfully.")
-    except FileNotFoundError:
-        print(f"Error: {csv_file_path} not found. Please ensure the CSV file is in the backend/data directory.")
+    except FileNotFoundError as e:
+        print(f"Error: {e}. Please ensure both CSV files are in the backend/data directory.")
         return
 
+    # --- Data Preprocessing for both datasets ---
     # Drop the 'name' column as it's not a feature for prediction
-    if 'name' in df.columns:
-        df = df.drop('name', axis=1)
+    if 'name' in df_hospital.columns:
+        df_hospital = df_hospital.drop('name', axis=1)
+    if 'name' in df_data.columns:
+        df_data = df_data.drop('name', axis=1)
+
+    # Ensure consistent column order before concatenation
+    # Get all unique feature names from both dataframes, excluding 'status'
+    all_features = sorted(list(set(df_hospital.columns.tolist() + df_data.columns.tolist()) - {'status'}))
+
+    # Reorder columns for df_hospital to match all_features, then add 'status'
+    # Important: The order of RPDE and DFA is different in the two datasets.
+    # We need to ensure that the order of columns matches the order in all_features
+    # before adding the 'status' column.
+    
+    # Adjust column order for df_hospital to match all_features
+    df_hospital_reordered = df_hospital[all_features + ['status']]
+
+    # Adjust column order for df_data to match all_features
+    df_data_reordered = df_data[all_features + ['status']]
+
+    # Concatenate the two dataframes
+    df_combined = pd.concat([df_hospital_reordered, df_data_reordered], ignore_index=True)
+    print(f"Combined DataFrame shape: {df_combined.shape}")
+    print("Combined DataFrame head:")
+    print(df_combined.head())
 
     # Separate features (X) and target (y)
     # Assuming 'status' is the target variable (1 for Parkinson's, 0 for healthy)
-    if 'status' not in df.columns:
-        print("Error: 'status' column not found in the CSV. Please ensure your target column is named 'status'.")
+    if 'status' not in df_combined.columns:
+        print("Error: 'status' column not found in the combined DataFrame. Please ensure your target column is named 'status'.")
         return
         
-    X = df.drop('status', axis=1)
-    y = df['status']
+    X = df_combined.drop('status', axis=1)
+    y = df_combined['status']
 
     # Store feature names for later use in prediction
     feature_names = X.columns.tolist()
@@ -69,15 +96,13 @@ def train_and_save_model():
     ]
 
     # Define the final estimator (meta-classifier)
-    # Using Logistic Regression as the final estimator
     final_estimator = LogisticRegression(random_state=42, solver='liblinear')
 
     # Create the Stacking Classifier
-    # n_jobs=-1 uses all available cores for parallel processing during fitting
     stacking_model = StackingClassifier(
         estimators=estimators,
         final_estimator=final_estimator,
-        cv=5,  # 5-fold cross-validation for meta-model training
+        cv=5,
         n_jobs=-1,
         verbose=1
     )
@@ -88,7 +113,7 @@ def train_and_save_model():
 
     # Evaluate the model
     y_pred = stacking_model.predict(X_test_scaled)
-    y_pred_proba = stacking_model.predict_proba(X_test_scaled)[:, 1] # Probability of being Parkinson's (status=1)
+    y_pred_proba = stacking_model.predict_proba(X_test_scaled)[:, 1]
 
     accuracy = accuracy_score(y_test, y_pred)
     print(f"\nModel Accuracy: {accuracy:.4f}")

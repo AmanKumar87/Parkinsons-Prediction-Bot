@@ -25,13 +25,11 @@
 
     <main class="container">
       <div class="prediction-form-container">
-        <h2>Enter Patient Voice Features</h2>
-        <form id="prediction-form">
+        <h2>Input Vocal Features for Prediction</h2>
+        <form id="prediction-form" method="post">
           <div class="form-row">
             <div class="form-group">
-              <label for="MDVP:Fo(Hz)"
-                >MDVP:Fo(Hz) (Average vocal fundamental frequency):</label
-              >
+              <label for="MDVP:Fo(Hz)">MDVP:Fo(Hz)</label>
               <input
                 type="number"
                 id="MDVP:Fo(Hz)"
@@ -39,12 +37,10 @@
                 step="any"
                 required
               />
-              <small>e.g., 152.668505</small>
+              <small>Average vocal fundamental frequency (Hz)</small>
             </div>
             <div class="form-group">
-              <label for="MDVP:Fhi(Hz)"
-                >MDVP:Fhi(Hz) (Maximum vocal fundamental frequency):</label
-              >
+              <label for="MDVP:Fhi(Hz)">MDVP:Fhi(Hz)</label>
               <input
                 type="number"
                 id="MDVP:Fhi(Hz)"
@@ -52,14 +48,12 @@
                 step="any"
                 required
               />
-              <small>e.g., 567.885678</small>
+              <small>Maximum vocal fundamental frequency (Hz)</small>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="MDVP:Flo(Hz)"
-                >MDVP:Flo(Hz) (Minimum vocal fundamental frequency):</label
-              >
+              <label for="MDVP:Flo(Hz)">MDVP:Flo(Hz)</label>
               <input
                 type="number"
                 id="MDVP:Flo(Hz)"
@@ -67,13 +61,10 @@
                 step="any"
                 required
               />
-              <small>e.g., 192.618956</small>
+              <small>Minimum vocal fundamental frequency (Hz)</small>
             </div>
             <div class="form-group">
-              <label for="MDVP:Jitter(%)"
-                >MDVP:Jitter(%) (Measure of variation in fundamental
-                frequency):</label
-              >
+              <label for="MDVP:Jitter(%)">MDVP:Jitter(%)</label>
               <input
                 type="number"
                 id="MDVP:Jitter(%)"
@@ -81,14 +72,12 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.020526</small>
+              <small>Measure of variation in fundamental frequency (%)</small>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="MDVP:Jitter(Abs)"
-                >MDVP:Jitter(Abs) (Absolute jitter):</label
-              >
+              <label for="MDVP:Jitter(Abs)">MDVP:Jitter(Abs)</label>
               <input
                 type="number"
                 id="MDVP:Jitter(Abs)"
@@ -96,12 +85,10 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.000046</small>
+              <small>Measure of variation in fundamental frequency (Abs)</small>
             </div>
             <div class="form-group">
-              <label for="MDVP:RAP"
-                >MDVP:RAP (Relative Average Perturbation):</label
-              >
+              <label for="MDVP:RAP">MDVP:RAP</label>
               <input
                 type="number"
                 id="MDVP:RAP"
@@ -109,14 +96,12 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.003918</small>
+              <small>Measure of variation in fundamental frequency</small>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="MDVP:PPQ"
-                >MDVP:PPQ (Five-point Period Perturbation Quotient):</label
-              >
+              <label for="MDVP:PPQ">MDVP:PPQ</label>
               <input
                 type="number"
                 id="MDVP:PPQ"
@@ -124,10 +109,10 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.002004</small>
+              <small>Measure of variation in fundamental frequency</small>
             </div>
             <div class="form-group">
-              <label for="Jitter:DDP">Jitter:DDP (DDP of jitter):</label>
+              <label for="Jitter:DDP">Jitter:DDP</label>
               <input
                 type="number"
                 id="Jitter:DDP"
@@ -135,14 +120,12 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.055994</small>
+              <small>Measure of variation in fundamental frequency</small>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="MDVP:Shimmer"
-                >MDVP:Shimmer (Measure of variation in amplitude):</label
-              >
+              <label for="MDVP:Shimmer">MDVP:Shimmer</label>
               <input
                 type="number"
                 id="MDVP:Shimmer"
@@ -150,12 +133,10 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.075386</small>
+              <small>Measure of variation in amplitude</small>
             </div>
             <div class="form-group">
-              <label for="MDVP:Shimmer(dB)"
-                >MDVP:Shimmer(dB) (Shimmer in dB):</label
-              >
+              <label for="MDVP:Shimmer(dB)">MDVP:Shimmer(dB)</label>
               <input
                 type="number"
                 id="MDVP:Shimmer(dB)"
@@ -163,15 +144,12 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.946724</small>
+              <small>Measure of variation in amplitude (dB)</small>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="Shimmer:APQ3"
-                >Shimmer:APQ3 (Three-point Amplitude Perturbation
-                Quotient):</label
-              >
+              <label for="Shimmer:APQ3">Shimmer:APQ3</label>
               <input
                 type="number"
                 id="Shimmer:APQ3"
@@ -179,13 +157,10 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.005619</small>
+              <small>Measure of variation in amplitude</small>
             </div>
             <div class="form-group">
-              <label for="Shimmer:APQ5"
-                >Shimmer:APQ5 (Five-point Amplitude Perturbation
-                Quotient):</label
-              >
+              <label for="Shimmer:APQ5">Shimmer:APQ5</label>
               <input
                 type="number"
                 id="Shimmer:APQ5"
@@ -193,14 +168,12 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.077182</small>
+              <small>Measure of variation in amplitude</small>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="MDVP:APQ"
-                >MDVP:APQ (Average Periodicity Quotient):</label
-              >
+              <label for="MDVP:APQ">MDVP:APQ</label>
               <input
                 type="number"
                 id="MDVP:APQ"
@@ -208,10 +181,10 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.115899</small>
+              <small>Measure of variation in amplitude</small>
             </div>
             <div class="form-group">
-              <label for="Shimmer:DDA">Shimmer:DDA (DDA of shimmer):</label>
+              <label for="Shimmer:DDA">Shimmer:DDA</label>
               <input
                 type="number"
                 id="Shimmer:DDA"
@@ -219,40 +192,42 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.046718</small>
+              <small>Measure of variation in amplitude</small>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="NHR">NHR (Noise-to-Harmonic Ratio):</label>
+              <label for="NHR">NHR</label>
               <input type="number" id="NHR" name="NHR" step="any" required />
-              <small>e.g., 0.057774</small>
+              <small
+                >Measure of ratio of noise to tonal components in the
+                voice</small
+              >
             </div>
             <div class="form-group">
-              <label for="HNR">HNR (Harmonic-to-Noise Ratio):</label>
+              <label for="HNR">HNR</label>
               <input type="number" id="HNR" name="HNR" step="any" required />
-              <small>e.g., 12.953851</small>
+              <small
+                >Measure of ratio of noise to tonal components in the
+                voice</small
+              >
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="RPDE"
-                >RPDE (Recurrence Period Density Entropy):</label
-              >
+              <label for="RPDE">RPDE</label>
               <input type="number" id="RPDE" name="RPDE" step="any" required />
-              <small>e.g., 0.386962</small>
+              <small>Nonlinear dynamical complexity measure</small>
             </div>
             <div class="form-group">
-              <label for="DFA">DFA (Detrended Fluctuation Analysis):</label>
+              <label for="DFA">DFA</label>
               <input type="number" id="DFA" name="DFA" step="any" required />
-              <small>e.g., 0.705999</small>
+              <small>Nonlinear dynamical complexity measure</small>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="spread1"
-                >spread1 (Nonlinear dynamical complexity measure):</label
-              >
+              <label for="spread1">spread1</label>
               <input
                 type="number"
                 id="spread1"
@@ -260,12 +235,10 @@
                 step="any"
                 required
               />
-              <small>e.g., -5.575916</small>
+              <small>Nonlinear dynamical complexity measure</small>
             </div>
             <div class="form-group">
-              <label for="spread2"
-                >spread2 (Nonlinear dynamical complexity measure):</label
-              >
+              <label for="spread2">spread2</label>
               <input
                 type="number"
                 id="spread2"
@@ -273,31 +246,30 @@
                 step="any"
                 required
               />
-              <small>e.g., 0.135644</small>
+              <small>Nonlinear dynamical complexity measure</small>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="D2">D2 (Correlation Dimension):</label>
+              <label for="D2">D2</label>
               <input type="number" id="D2" name="D2" step="any" required />
-              <small>e.g., 2.798652</small>
+              <small>Nonlinear dynamical complexity measure</small>
             </div>
             <div class="form-group">
-              <label for="PPE">PPE (Pitch Period Entropy):</label>
+              <label for="PPE">PPE</label>
               <input type="number" id="PPE" name="PPE" step="any" required />
-              <small>e.g., 0.111891</small>
+              <small>Nonlinear dynamical complexity measure</small>
             </div>
           </div>
           <button type="submit" class="submit-button">Get Prediction</button>
         </form>
-        <div id="prediction-result" class="prediction-result"></div>
         <div id="error-message" class="error-message"></div>
       </div>
     </main>
 
     <footer>
       <div class="container">
-        <p>&copy; 2024 Parkinson's Chatbot. All rights reserved.</p>
+        <p>&copy; 2024 Parkinson's Prediction. All rights reserved.</p>
       </div>
     </footer>
 

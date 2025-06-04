@@ -1,8 +1,116 @@
+// document.addEventListener("DOMContentLoaded", () => {
+//   const predictionForm = document.getElementById("prediction-form");
+//   const errorMessageDiv = document.getElementById("error-message");
+
+//   const showMessage = (element, message, isError = false) => {
+//     element.innerHTML = message;
+//     element.classList.add("show");
+//     if (isError) {
+//       element.classList.add("error");
+//     } else {
+//       element.classList.remove("error");
+//     }
+//   };
+
+//   const hideMessage = (element) => {
+//     element.innerHTML = "";
+//     element.classList.remove("show", "error");
+//   };
+
+//   predictionForm.addEventListener("submit", async (event) => {
+//     event.preventDefault(); // Prevent default form submission
+//     console.log("Form submission intercepted (event.preventDefault() called).");
+
+//     hideMessage(errorMessageDiv); // Clear any previous error messages
+
+//     const features = {}; // Object to store collected input features
+//     let isValid = true; // Flag for validation status
+
+//     console.log("Collecting and validating form data...");
+//     const formData = new FormData(predictionForm);
+
+//     // Iterate through form fields to collect data and perform basic validation
+//     for (let [name, value] of formData.entries()) {
+//       const numValue = parseFloat(value);
+
+//       if (isNaN(numValue)) {
+//         showMessage(
+//           errorMessageDiv,
+//           `Please enter a valid number for <strong>${name}</strong>.`,
+//           true
+//         );
+//         isValid = false; // Set flag to false if validation fails
+//         console.error(
+//           `Validation failed for <span class="math-inline">\{name\}\: "</span>{value}" is not a number.`
+//         );
+//         break; // Stop on first validation error
+//       }
+//       features[name] = numValue; // Store numerical value
+//     }
+
+//     if (!isValid) {
+//       console.log("Form validation failed. Stopping prediction process.");
+//       return; // Exit if validation failed
+//     }
+
+//     console.log("Validation successful. Collected features:", features);
+//     console.log("Sending POST request to /predict endpoint...");
+
+//     try {
+//       // Send prediction request to your backend FastAPI
+//       const response = await fetch("http://127.0.0.1:8000/predict", {
+//         method: "POST", // Explicitly define POST method
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ features: features }),
+//       });
+
+//       console.log("Response received from /predict. Checking status...");
+//       if (!response.ok) {
+//         // If response is not OK (e.g., 400, 500 status)
+//         const errorData = await response.json();
+//         console.error(`Backend error (${response.status}):`, errorData);
+//         throw new Error(
+//           errorData.detail ||
+//             `Prediction failed with status: ${response.status}`
+//         );
+//       }
+
+//       const data = await response.json(); // Parse the JSON response from the backend
+//       console.log("Prediction successful. Data received:", data);
+
+//       // Store prediction results and input features in localStorage
+//       const dataToStore = {
+//         prediction: data.prediction,
+//         probability: data.probability,
+//         inputFeatures: features,
+//       };
+//       localStorage.setItem("parkinsonsPrediction", JSON.stringify(dataToStore));
+
+//       // Set flag to trigger chatbot summary on next chatbot.html load
+//       localStorage.setItem("triggerChatbotSummary", "true");
+//       console.log(
+//         "Prediction data and summary trigger flag saved to localStorage."
+//       );
+
+//       // Redirect to the report dashboard
+//       window.location.href = "report_dashboard.html";
+//     } catch (error) {
+//       console.error("Error during prediction process (caught):", error); // Updated log message
+//       showMessage(
+//         errorMessageDiv,
+//         `Prediction failed: ${error.message}. Please ensure the backend is running and all input values are valid.`,
+//         true
+//       );
+//     }
+//     console.log("End of prediction form submission handler.");
+//   });
+// });
 document.addEventListener("DOMContentLoaded", () => {
   const predictionForm = document.getElementById("prediction-form");
   const errorMessageDiv = document.getElementById("error-message");
 
-  // Function to show/hide error messages
   const showMessage = (element, message, isError = false) => {
     element.innerHTML = message;
     element.classList.add("show");
@@ -19,19 +127,19 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   predictionForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    console.log("Form submission prevented!");
+    event.preventDefault(); // Prevent default form submission
+    console.log("Form submission intercepted (event.preventDefault() called).");
 
-    hideMessage(errorMessageDiv);
+    hideMessage(errorMessageDiv); // Clear any previous error messages
 
+    const features = {}; // Object to store collected input features
+    let isValid = true; // Flag for validation status
+
+    console.log("Collecting and validating form data...");
     const formData = new FormData(predictionForm);
-    const features = {}; // This object will store the input features
-    let isValid = true;
 
-    console.log("Collecting form data...");
-
+    // Iterate through form fields to collect data and perform basic validation
     for (let [name, value] of formData.entries()) {
-      const inputElement = document.getElementById(name);
       const numValue = parseFloat(value);
 
       if (isNaN(numValue)) {
@@ -40,62 +148,71 @@ document.addEventListener("DOMContentLoaded", () => {
           `Please enter a valid number for <strong>${name}</strong>.`,
           true
         );
-        isValid = false;
-        console.error(`Validation error: ${name} is not a valid number.`);
-        break;
+        isValid = false; // Set flag to false if validation fails
+        console.error(
+          `Validation failed for ${name}: "${value}" is not a number.`
+        );
+        break; // Stop on first validation error
       }
-
-      features[name] = numValue; // Store the numerical value
+      features[name] = numValue; // Store numerical value
     }
 
     if (!isValid) {
-      console.log("Form validation failed, stopping submission.");
-      return;
+      console.log("Form validation failed. Stopping prediction process.");
+      return; // Exit if validation failed
     }
 
-    console.log("Form validation passed. Sending prediction request...");
+    console.log("Validation successful. Collected features:", features);
+    console.log("Sending POST request to /predict endpoint...");
+
     try {
+      // Send prediction request to your backend FastAPI
       const response = await fetch("http://127.0.0.1:8000/predict", {
-        method: "POST",
+        method: "POST", // Explicitly define POST method
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ features: features }),
       });
 
-      console.log("Fetch request completed. Checking response...");
+      console.log("Response received from /predict. Checking status...");
       if (!response.ok) {
+        // If response is not OK (e.g., 400, 500 status)
         const errorData = await response.json();
-        console.error("Backend response not OK:", response.status, errorData);
+        console.error(`Backend error (${response.status}):`, errorData);
         throw new Error(
-          errorData.detail || `HTTP error! status: ${response.status}`
+          errorData.detail ||
+            `Prediction failed with status: ${response.status}`
         );
       }
 
-      const data = await response.json();
-      console.log("Received data from backend:", data);
+      const data = await response.json(); // Parse the JSON response from the backend
+      console.log("Prediction successful. Data received:", data);
 
       // Combine prediction data with input features before storing
       const dataToStore = {
         prediction: data.prediction,
         probability: data.probability,
-        inputFeatures: features, // Store the raw input features here
+        inputFeatures: features,
       };
-
       localStorage.setItem("parkinsonsPrediction", JSON.stringify(dataToStore));
+
+      // Set flag to trigger chatbot summary on next chatbot.html load
+      localStorage.setItem("triggerChatbotSummary", "true");
       console.log(
-        "Prediction and input data stored in localStorage. Redirecting..."
+        "Prediction data and summary trigger flag saved to localStorage."
       );
 
+      // Redirect to the report dashboard
       window.location.href = "report_dashboard.html";
     } catch (error) {
-      console.error("Error during prediction fetch or processing:", error);
+      console.error("Error during prediction process (caught):", error);
       showMessage(
         errorMessageDiv,
-        `Prediction failed: ${error.message}. Please ensure the backend is running and input values are correct.`,
+        `Prediction failed: ${error.message}. Please ensure the backend is running and all input values are valid.`,
         true
       );
     }
-    console.log("End of submit event listener.");
+    console.log("End of prediction form submission handler.");
   });
 });

@@ -16,6 +16,7 @@ PREDICTION_LOG_FILE = os.path.join(DATA_DIR, 'user_predictions_log.csv')
 # Load environment variables from .env file
 config = dotenv_values(".env") # Load variables from .env
 OPENROUTER_API_KEY = config.get("OPENROUTER_API_KEY") # Get the API key
+print(f"Loaded OPENROUTER_API_KEY: {'*' * len(OPENROUTER_API_KEY) if OPENROUTER_API_KEY else 'NOT_LOADED'}") # DEBUG: Verify key loading
 
 # Load the trained model, scaler, and feature names
 try:
@@ -80,6 +81,7 @@ def log_prediction(input_data: Dict[str, float], prediction_result: int, probabi
     if not os.path.exists(PREDICTION_LOG_FILE):
         log_df.to_csv(PREDICTION_LOG_FILE, index=False)
     else:
+        # Corrected typo here: PREULATION_LOG_FILE -> PREDICTION_LOG_FILE
         log_df.to_csv(PREDICTION_LOG_FILE, mode='a', header=False, index=False)
     print(f"Prediction logged to {PREDICTION_LOG_FILE}")
 
@@ -124,26 +126,17 @@ async def chat_with_llm(chat_message: ChatMessage):
     OPENROUTER_API_BASE = "https://openrouter.ai/api/v1"
     OPENROUTER_MODEL = "mistralai/mistral-7b-instruct:free"
 
-    headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-        "Content-Type": "application/json"
-    }
-
-    # messages = [
-    #     {"role": "system", "content": """You are a helpful AI assistant focused on providing information about Parkinson's Disease symptoms.
-    #     You should ask clarifying questions about symptoms, but **never diagnose** Parkinson's disease.
-    #     Always include a disclaimer that this is for informational purposes only and users should consult a healthcare professional for diagnosis.
-    #     For accurate prediction, gently guide the user to the "Accurate Prediction" section where they can input numerical voice features."""},
-    # ]
     messages = [
-    {"role": "system", "content": """You are a helpful and specialized AI assistant strictly focused on providing information about Parkinson's Disease symptoms, related facts, and common questions.
-    Your purpose is to assist users specifically on the topic of Parkinson's Disease.
-    If a user asks a question about a topic unrelated to Parkinson's Disease or another medical condition/disease, you must politely decline to answer, state that your expertise is limited to Parkinson's Disease, and gently guide them back to the relevant topic.
-    When providing lists of symptoms or other structured information, please use Markdown for formatting (e.g., bullet points, bold text).
-    You should ask clarifying questions about Parkinson's symptoms, but **never diagnose** Parkinson's disease.
-    Always include a disclaimer that this is for informational purposes only and users should consult a healthcare professional for diagnosis.
-    For accurate prediction, gently guide the user to the "Accurate Prediction" section where they can input numerical voice features."""},
-]
+        {"role": "system", "content": """You are a helpful and specialized AI assistant strictly focused on providing information about Parkinson's Disease symptoms, related facts, and common questions.
+        When a user provides their prediction results, including a probability score and specific vocal feature insights (e.g., 'MDVP:Jitter(%)' is elevated), use this information to make your summary and recommendations more specific and relevant.
+        For example, if jitter is high, you can mention that elevated jitter can be a vocal characteristic associated with Parkinson's.
+        Your purpose is to assist users specifically on the topic of Parkinson's Disease based on the data they provide.
+        If a user asks a question about a topic unrelated to Parkinson's Disease or another medical condition/disease, you must politely decline to answer, state that your expertise is limited to Parkinson's Disease, and gently guide them back to the relevant topic.
+        When providing lists of symptoms or other structured information, please use Markdown for formatting (e.g., bullet points, bold text).
+        You should ask clarifying questions about Parkinson's symptoms, but **never diagnose** Parkinson's disease.
+        Always include a disclaimer that this is for informational purposes only and users should consult a healthcare professional for diagnosis.
+        For accurate prediction, gently guide the user to the "Accurate Prediction" section where they can input numerical voice features."""},
+    ]
 
     for msg in chat_message.history:
         messages.append(msg)
@@ -158,9 +151,13 @@ async def chat_with_llm(chat_message: ChatMessage):
     }
 
     print(f"Sending request to OpenRouter with model: {OPENROUTER_MODEL}")
-    async with httpx.AsyncClient(base_url=OPENROUTER_API_BASE, headers=headers) as client:
+    async with httpx.AsyncClient(base_url=OPENROUTER_API_BASE) as client:
+        headers = {
+            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+            "Content-Type": "application/json"
+        }
         try:
-            response = await client.post("/chat/completions", json=payload, timeout=30.0)
+            response = await client.post("/chat/completions", json=payload, headers=headers, timeout=30.0)
             response.raise_for_status()
             llm_response = response.json()
             

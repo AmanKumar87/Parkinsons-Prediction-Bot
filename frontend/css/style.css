@@ -323,16 +323,46 @@ footer {
   text-align: center;
 }
 
-.chart-container-wrapper {
-  position: relative;
-  height: 400px;
-  width: 100%;
-  margin: 0 auto;
+/* NEW: Styles for Markdown-generated content in report_dashboard.html */
+.report-result-box p {
+  margin-bottom: 1em; /* Add spacing below paragraphs */
+  line-height: 1.6;
+  text-align: left; /* Ensure text alignment for paragraphs */
 }
 
-#vocalFeatureChart {
-  width: 100% !important;
-  height: 100% !important;
+.report-result-box ul {
+  list-style-type: disc; /* Standard bullet points */
+  margin-left: 20px; /* Indent lists */
+  margin-bottom: 1em;
+  padding-left: 0;
+  text-align: left; /* Ensure list alignment */
+}
+
+.report-result-box ul li {
+  margin-bottom: 0.5em; /* Spacing between list items */
+}
+
+.report-result-box strong {
+  font-weight: bold; /* Ensure bold text is actually bold */
+}
+
+.report-result-box h3 span {
+  font-weight: bold; /* Make the HIGH/LOW text bold */
+}
+
+/* Removed individual chart styles as they are no longer needed */
+/* #individual-charts-container is removed from HTML */
+/* .single-feature-chart-wrapper is removed from HTML */
+/* .single-feature-chart-wrapper h4 is removed from HTML */
+/* .single-feature-canvas is removed from HTML */
+
+.chart-instruction {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  /* This element is also removed from HTML, so this style is effectively dead */
 }
 
 .data-table-section table {
@@ -509,8 +539,11 @@ footer {
     padding: 20px;
   }
 
-  .chart-container-wrapper {
-    height: 300px; /* Adjust chart height for smaller screens */
+  /* Single chart responsive (styles are effectively dead but kept for consistency) */
+  .single-feature-chart-wrapper {
+    width: 100%; /* Full width on smaller screens */
+    max-width: none;
+    height: 120px; /* Adjust height */
   }
 
   .report-result-box {
