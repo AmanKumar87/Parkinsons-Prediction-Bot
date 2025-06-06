@@ -261,7 +261,63 @@
               <small>Nonlinear dynamical complexity measure</small>
             </div>
           </div>
+          <div
+            class="form-row"
+            style="
+              margin-top: 30px;
+              border-top: 1px solid #eee;
+              padding-top: 20px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            "
+          >
+            <label
+              style="
+                font-weight: bold;
+                margin-bottom: 15px;
+                font-size: 1.1em;
+                color: #2c3e50;
+              "
+              >Or, Get Features from Voice Input:</label
+            >
+            <div style="display: flex; gap: 15px">
+              <button
+                type="button"
+                id="start-recording-btn"
+                class="submit-button"
+                style="
+                  background-color: #28a745;
+                  width: auto;
+                  padding: 10px 20px;
+                "
+              >
+                Start Recording
+              </button>
+              <button
+                type="button"
+                id="stop-recording-btn"
+                class="submit-button"
+                style="
+                  background-color: #dc3545;
+                  width: auto;
+                  padding: 10px 20px;
+                "
+                disabled
+              >
+                Stop Recording
+              </button>
+            </div>
+            <p
+              id="recording-status"
+              style="margin-top: 15px; font-style: italic; color: #666"
+            >
+              Ready to record.
+            </p>
+          </div>
+
           <button type="submit" class="submit-button">Get Prediction</button>
+          <!-- <button type="submit" class="submit-button">Get Prediction</button> -->
         </form>
         <div id="error-message" class="error-message"></div>
       </div>
