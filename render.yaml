@@ -4,7 +4,7 @@ services:
     name: parkinsons-backend
     env: python
     # Specify Python version here. 3.11.9 is a good stable choice.
-    pythonVersion: 3.11.9
+    runtime: python-3.11.9
     buildCommand: pip install -r requirements.txt && apt-get update && apt-get install -y ffmpeg
     startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
     rootDir: backend # Your backend code is in the 'backend' folder
