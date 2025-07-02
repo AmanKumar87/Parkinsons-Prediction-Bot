@@ -1,75 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction Report</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parkinson's AI Assistant | Report</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Prediction Report</h1>
-            <nav>
-                <ul>
-                    <li><a href="chatbot.html">Chatbot</a></li>
-                    <li><a href="prediction.html">Prediction</a></li>
-                    <li><a href="report_dashboard.html" class="active">Report</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <main class="container">
-        <div class="report-dashboard-container">
-            <h2>Prediction Summary</h2>
-            <div id="prediction-summary" class="report-result-box">
-                </div>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/report_style.css" />
+  </head>
+  <body>
+    <nav class="main-nav">
+      <ul>
+        <li class="nav-bot-title">
+          <span class="nav-bot-title">Parkinson's Report</span>
+        </li>
+        <li class="nav-links"><a href="chatbot.html">Chatbot</a></li>
+        <li class="nav-links"><a href="prediction.html">Get Prediction</a></li>
+        <li class="nav-links">
+          <a href="report_dashboard.html" class="active">Previous Report</a>
+        </li>
+        <li class="nav-links">
+          <button
+            id="theme-toggle"
+            class="theme-toggle-btn"
+            aria-label="Toggle theme"
+          >
+            <i class="ph-bold ph-sun"></i>
+            <i class="ph-bold ph-moon"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
 
-            <div class="dashboard-sections">
-                <div class="dashboard-section data-table-section">
-                    <h3>Detailed Feature Analysis</h3>
-                    <table id="feature-table">
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Value</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="disclaimer-text">
-                <h3>Disclaimer:</h3>
-                <p>This report is for informational purposes only and is based on a machine learning model's analysis of your vocal features. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of a qualified healthcare professional for any questions regarding a medical condition. Do not disregard professional medical advice or delay in seeking it because of something you have read in this report.</p>
-            </div>
-
-            <div class="report-actions">
-                <a href="prediction.html" class="back-to-prediction-btn">Back to Prediction</a>
-                <a href="chatbot.html" id="go-to-chatbot-btn" class="back-to-prediction-btn">Go to Chatbot</a>
-                <button class="download-pdf-btn" id="download-pdf-btn">Download PDF Report</button>
-            </div>
+    <main class="main-content">
+      <div class="report-pro-container" id="report-content-to-capture">
+        <div class="page-title-container">
+          <h1>Prediction Analysis Report</h1>
+          <p>An interactive breakdown of the vocal feature analysis.</p>
         </div>
 
-        <div class="loading-overlay" id="loading-overlay">
-            <div class="spinner"></div>
-            <p>Generating PDF...</p>
+        <div class="report-grid">
+          <div class="report-main-card" id="prediction-summary-pro"></div>
+
+          <div class="report-details-card">
+            <h3>Detailed Feature Analysis</h3>
+            <div class="table-container">
+              <table id="feature-table-pro">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Your Value</th>
+                    <th>Reference Range (Healthy)</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="feature-table-body-pro"></tbody>
+              </table>
+            </div>
+
+            <div class="report-actions-pro">
+              <a
+                href="chatbot.html"
+                id="go-to-chatbot-btn-pro"
+                class="action-btn-pro"
+              >
+                <i class="ph-bold ph-chats-circle"></i>
+                <span>Discuss Results with AI</span>
+              </a>
+              <!-- <button class="action-btn-pro primary" id="download-pdf-btn-pro">
+                <i class="ph-bold ph-download-simple"></i>
+                <span>Download PDF Report</span>
+              </button> -->
+            </div>
+
+            <div class="disclaimer-pro">
+              <strong>Disclaimer:</strong> This report is for informational
+              purposes only and is not a substitute for professional medical
+              advice. Please consult a qualified healthcare professional for any
+              medical concerns.
+            </div>
+          </div>
         </div>
+      </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Parkinson's Prediction. All rights reserved.</p>
-    </footer>
+    <div id="loading-overlay" class="loading-overlay" hidden>
+      <div class="spinner"></div>
+      <p>Generating PDF report...</p>
+    </div>
 
     <script src="js/report_dashboard.js"></script>
-</body>
+  </body>
 </html>

@@ -3,55 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Parkinson's Chatbot</title>
+    <title>Parkinson's AI Assistant | Chatbot</title>
+    <!-- Google Fonts: Inter for a clean, modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
-    <header>
-      <div class="container">
-        <h1>Parkinson's Chatbot</h1>
-        <nav>
-          <ul>
-            <li><a href="chatbot.html" class="active">Chatbot</a></li>
-            <li><a href="prediction.html">Prediction</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
 
-    <main class="container">
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      
+      <!-- The main navigation is now positioned relative to the main content area -->
+      <nav class="main-nav">
+          <ul>
+            <li class="nav-bot-title"><span class="nav-bot-title">Parkinson's Chatbot</span></li>
+            <li class="nav-links"><a href="chatbot.html" class="active">Chatbot</a></li>
+            <li class="nav-links"><a href="prediction.html">Get Prediction</a></li>
+            <!-- Theme Toggle Button -->
+            <li class="nav-links">
+              <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                <i class="ph-bold ph-sun"></i>
+                <i class="ph-bold ph-moon"></i>
+              </button>
+            </li>
+          </ul>
+      </nav>
+
       <div class="chat-container">
-        <div class="chat-box" id="chat-box">
-          <div class="message bot-message">
-            <p>
-              Hello! I'm here to provide information about Parkinson's Disease
-              symptoms. Please remember, I cannot diagnose. For an accurate
-              prediction, please visit the "Prediction" section. What would you
-              like to know?
-            </p>
-          </div>
+        <!-- A title for the page -->
+        <div class="page-title-container">
+            <h1>Parkinson's Chatbot</h1>
+            <p>Your compassionate guide to understanding, Predicting, and Managing Parkinson's disease.</p>
         </div>
-        <div class="chat-input-area">
-          <input
-            type="text"
-            id="user-input"
-            placeholder="Type your message here..."
-          />
-          <button id="send-button">Send</button>
+
+        <!-- Chat messages will appear here -->
+        <div class="chat-box" id="chat-box" aria-live="polite">
+          <!-- Initial bot message will be dynamically inserted by JS -->
+        </div>
+        
+        <!-- Container for suggestion cards -->
+        <div class="suggestion-cards" id="suggestion-cards">
+            <!-- Suggestion cards will be dynamically inserted by JS -->
+        </div>
+
+        <!-- User input area -->
+        <div class="chat-input-wrapper">
+          <div class="chat-input-area">
+            <input
+              type="text"
+              id="user-input"
+              placeholder="Type your message..."
+              aria-label="Your message"
+              autocomplete="off"
+            />
+            
+            <button id="send-button" aria-label="Send message">
+              <i class="ph-bold ph-paper-plane-right"></i>
+            </button>
+          </div>
         </div>
       </div>
     </main>
 
-    <footer>
-      <div class="container">
-        <p>&copy; 2024 Parkinson's Chatbot. All rights reserved.</p>
-      </div>
-    </footer>
-
+    <!-- JAVASCRIPT LIBRARIES & SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="js/chatbot.js"></script>
   </body>
