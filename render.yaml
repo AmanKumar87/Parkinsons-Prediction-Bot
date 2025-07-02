@@ -1,0 +1,22 @@
+# render.yaml
+services:
+  - type: web
+    name: parkinsons-backend
+    env: python
+    # Specify Python version here. 3.11.9 is a good stable choice.
+    pythonVersion: 3.11.9
+    buildCommand: pip install -r requirements.txt && apt-get update && apt-get install -y ffmpeg
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    rootDir: backend # Your backend code is in the 'backend' folder
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false # Do not sync from Git (keep as secret)
+        value: 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 # Render will use the value from your dashboard env vars
+    healthCheckPath: /
+    numInstances: 1 # For free tier, usually 1
+    # You can add a static site service here too if you want to manage both in render.yaml
+    # - type: static
+    #   name: parkinsons-frontend
+    #   buildCommand: npm install # or leave empty if no build needed
+    #   publishPath: frontend/ # Your static files are in the 'frontend' folder
+    #   rootDir: frontend
