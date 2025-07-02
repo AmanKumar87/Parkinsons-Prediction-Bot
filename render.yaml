@@ -1,22 +1,36 @@
 # render.yaml
+# This blueprint defines your services on Render.
+# It addresses the envVars syntax and omits problematic runtime fields for 'web' type.
+
 services:
   - type: web
     name: parkinsons-backend
     env: python
-    # Specify Python version here. 3.11.9 is a good stable choice.
-    runtime: python-3.11.9
-    buildCommand: pip install -r requirements.txt && apt-get update && apt-get install -y ffmpeg
+    # For 'type: web' services, Render often implicitly detects Python version
+    # from a 'runtime.txt' file in the root.
+    # Explicit 'pythonVersion' or 'runtime' fields here are not supported for 'web' type.
+    # Ensure 'runtime.txt' in your repo root contains: python-3.11.9
+
+    buildCommand: pip install -r backend/requirements.txt && apt-get update && apt-get install -y ffmpeg
     startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
     rootDir: backend # Your backend code is in the 'backend' folder
+
+    # Correct envVars syntax:
+    # If the value is a secret managed in Render dashboard, use 'sync: false' and omit 'value'.
+    # If the value is literal and not a secret, use 'value: "literal_string"'.
     envVars:
       - key: OPENROUTER_API_KEY
-        sync: false # Do not sync from Git (keep as secret)
-        value: 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 # Render will use the value from your dashboard env vars
+        sync:
+          false # Tells Render to get the value from the dashboard UI secrets, not from this file.
+          # DO NOT put your actual key here.
+
     healthCheckPath: /
     numInstances: 1 # For free tier, usually 1
-    # You can add a static site service here too if you want to manage both in render.yaml
-    # - type: static
-    #   name: parkinsons-frontend
-    #   buildCommand: npm install # or leave empty if no build needed
-    #   publishPath: frontend/ # Your static files are in the 'frontend' folder
-    #   rootDir: frontend
+
+
+  # You can add a static site service here too if you want to manage both in render.yaml
+  # - type: static
+  #   name: parkinsons-frontend
+  #   buildCommand: npm install # or leave empty if no build needed
+  #   publishPath: frontend/ # Your static files are in the 'frontend' folder
+  #   rootDir: frontend
