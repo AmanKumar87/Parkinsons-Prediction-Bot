@@ -1,0 +1,559 @@
+/* ==============================================
+   PREDICTION PAGE STYLES (AI NeuroCare v2.3 - Refined for Professional Feel)
+   ============================================== */
+
+/* --- 1. Keyframe Animations --- */
+@keyframes slide-down-fade-in {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes subtle-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- 2. Main Prediction Layout --- */
+.prediction-container {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md); /* Ensures content isn't flush with screen edges on smaller views */
+}
+
+/* --- 3. Voice First Primary Action Container --- */
+.voice-first-container {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-xl);
+  margin-top: var(--space-lg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: slide-down-fade-in 0.6s var(--transition-smooth) both;
+  position: relative;
+  overflow: hidden;
+}
+
+.voice-visualizer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1;
+}
+
+.voice-visualizer.visible {
+    opacity: 1;
+}
+
+.voice-first-container .ph-waveform,
+.voice-first-container h2,
+.voice-first-container > p,
+.voice-controls,
+.manual-entry-trigger {
+    position: relative;
+    z-index: 2;
+}
+
+
+.voice-first-container .ph-waveform {
+  font-size: 3rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+  transition: opacity 0.3s ease-in-out;
+}
+
+.voice-first-container .ph-waveform.hidden {
+  opacity: 0;
+}
+
+
+.voice-first-container h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.voice-first-container > p {
+  color: var(--color-text-secondary);
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--space-lg);
+}
+
+.voice-controls {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.voice-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 0.7rem var(--space-lg);
+  font-family: var(--font-family-main);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--border-radius-md, 6px); /* Standard radius, fallback if var not defined */
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), opacity var(--transition-fast);
+  border: 1px solid var(--color-primary);
+  box-shadow: none; /* Explicitly remove any default shadows */
+}
+
+.voice-btn.record {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+
+.voice-btn.record:hover {
+  background-color: var(--color-primary-dark, hsl(var(--color-primary-hsl-h, 0), var(--color-primary-hsl-s, 0%), calc(var(--color-primary-hsl-l, 0%) - 10%))); /* Darken more for clear hover */
+  border-color: var(--color-primary-dark, hsl(var(--color-primary-hsl-h, 0), var(--color-primary-hsl-s, 0%), calc(var(--color-primary-hsl-l, 0%) - 10%)));
+}
+
+.voice-btn.stop {
+  background-color: var(--color-surface-alt, var(--color-code-bg));
+  border-color: var(--color-border-subtle);
+  color: var(--color-text-secondary);
+}
+.voice-btn.stop:hover {
+  background-color: var(--color-border-hover, var(--color-border-subtle));
+}
+
+.voice-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+#recording-status {
+  font-weight: 500;
+  font-size: 0.9rem;
+  min-height: 1.2em;
+  transition: color var(--transition-fast);
+  margin-top: var(--space-sm);
+}
+
+.manual-entry-trigger {
+  margin-top: var(--space-lg);
+  border-top: 1px solid var(--color-border-subtle);
+  width: 100%;
+  padding-top: var(--space-lg);
+}
+
+.secondary-action-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-family-main);
+  transition: color var(--transition-fast);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.secondary-action-btn:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+/* --- 4. Manual Input Wrapper & Tab System --- */
+.manual-input-wrapper {
+  display: none; /* Initially hidden */
+  background-color: var(--color-surface); 
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--border-radius-lg, 12px); 
+  margin-top: var(--space-xl);
+  overflow: hidden; 
+  padding: 10px;
+}
+
+.manual-input-wrapper.visible {
+  display: block;
+  animation: slide-down-fade-in 0.6s var(--transition-smooth) both;
+}
+
+.tabs-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-sm);
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.tabs-nav {
+    display: flex;
+    gap: var(--space-md, 16px);
+    flex-grow: 1;
+    justify-content: center;
+    overflow-x: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.tabs-nav::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}
+
+
+.tab-arrow-btn {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: var(--space-sm);
+    border-radius: var(--border-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.tab-arrow-btn:hover:not(:disabled) {
+    background-color: var(--color-code-bg);
+    color: var(--color-primary);
+}
+
+.tab-arrow-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.tab-nav-btn {
+  position: relative;
+  background: none;
+  border: none;
+  color: var(--color-text-secondary); 
+  font-family: var(--font-family-main);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: var(--space-md, 16px) var(--space-sm, 12px);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.tab-nav-btn::after { 
+  content: '';
+  position: absolute;
+  bottom: -1px; 
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-primary); 
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.tab-nav-btn:hover {
+  color: var(--color-text-primary);
+}
+
+.tab-nav-btn.active { 
+  color: var(--color-primary);
+}
+
+.tab-nav-btn.active::after {
+  transform: scaleX(1);
+}
+
+.tabs-content {
+  padding: var(--space-lg, 24px); 
+}
+.tab-pane {
+  animation: subtle-fade-in 0.4s ease-out;
+}
+
+.tab-pane[hidden] {
+  display: none !important; 
+}
+
+
+/* --- 5. Form Element Styling --- */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-lg, 24px); 
+}
+
+.form-grid-four-cols { 
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-lg, 24px);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary); 
+  margin-bottom: var(--space-xs, 4px); 
+}
+
+.form-group small { 
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  opacity: 0.8;
+  margin-top: var(--space-xs, 4px);
+  line-height: 1.4;
+}
+
+.form-group input[type="number"] {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--border-radius-sm, 4px);
+  padding: 0.7rem var(--space-md, 12px);
+  color: var(--color-text-primary); 
+  font-family: var(--font-family-main);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  box-shadow: none; 
+}
+
+.form-group input[type="number"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.25);
+}
+
+/* --- 6. Accessibility Focus & Tutorial Styling --- */
+.voice-btn:focus-visible,
+.secondary-action-btn:focus-visible,
+.tab-nav-btn:focus-visible,
+.submit-button:focus-visible { 
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.pro-tip { 
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px); 
+  padding: var(--space-s, 8px) var(--space-sm, 12px); 
+  margin: var(--space-md, 16px) 0; 
+  background-color: var(--color-surface-alt, var(--color-code-bg)); 
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--border-radius-sm, 4px); 
+  color: var(--color-text-secondary);
+}
+
+.pro-tip i { 
+  font-size: 1.1rem;
+  color: var(--color-text-secondary); 
+  flex-shrink: 0;
+  margin-right: var(--space-xs, 4px); 
+}
+
+.pro-tip p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.pro-tip p b { 
+    font-weight: 500; 
+}
+
+.pro-tip kbd { 
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border-strong, var(--color-border-subtle));
+  padding: 0.1em 0.35em; 
+  border-radius: var(--border-radius-xs, 2px); 
+  font-family: var(--font-family-code);
+  font-size: 0.9em; 
+  color: var(--color-text-secondary);
+  line-height: 1; 
+  display: inline-block; 
+  vertical-align: baseline;
+}
+
+kbd { 
+  background-color: var(--color-background); 
+  border: 1px solid var(--color-border-strong, var(--color-border-subtle)); 
+  padding: 0.1em 0.4em;
+  border-radius: var(--border-radius-sm, 3px);
+  font-family: var(--font-family-code);
+  font-size: 0.9em;
+  color: var(--color-text-secondary); 
+}
+
+/* --- 7. Submission & Error Area Styling --- */
+.submission-area {
+  margin-top: var(--space-lg, 24px); 
+  padding-top: var(--space-lg, 24px); 
+  border-top: 1px solid var(--color-border-subtle); 
+  display: flex;
+  justify-content: flex-end; 
+}
+
+.submit-button { 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center; 
+  gap: var(--space-sm, 8px); 
+  background-color: var(--color-primary); 
+  color: var(--color-text-on-primary); 
+  font-family: var(--font-family-main);
+  font-size: 0.95rem; 
+  font-weight: 600;
+  padding: var(--space-sm, 10px) var(--space-lg, 20px); 
+  border: 1px solid var(--color-primary); 
+  border-radius: var(--border-radius-md, 6px); 
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), opacity var(--transition-fast);
+  box-shadow: none; 
+  text-decoration: none; 
+}
+
+.submit-button i { 
+  font-size: 1.1em;
+  line-height: 1; 
+}
+
+.submit-button:hover {
+  background-color: var(--color-primary-dark, hsl(var(--color-primary-hsl-h, 0), var(--color-primary-hsl-s, 0%), calc(var(--color-primary-hsl-l, 0%) - 10%))); 
+  border-color: var(--color-primary-dark, hsl(var(--color-primary-hsl-h, 0), var(--color-primary-hsl-s, 0%), calc(var(--color-primary-hsl-l, 0%) - 10%)));
+  box-shadow: none; 
+}
+
+#error-message {
+  margin-top: var(--space-md, 16px);
+  padding: var(--space-md, 12px);
+  border-radius: var(--border-radius-sm, 4px);
+  display: none; 
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+#error-message.error { 
+    background-color: rgba(var(--color-error-rgb, 220, 53, 69), 0.1); 
+    border: 1px solid rgba(var(--color-error-rgb, 220, 53, 69), 0.4);
+    color: var(--color-error-text, #f8d7da); 
+}
+
+.light-mode #error-message.error {
+  background-color: var(--color-error-background-light, #f8d7da);
+  border: 1px solid var(--color-error-border-light, #f5c2c7);
+  color: var(--color-error-text-light, #842029);
+}
+
+#error-message.show {
+  display: block;
+}
+
+/* ==============================================
+   8. PROCESSING ANIMATION OVERLAY
+   ============================================== */
+
+.processing-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(var(--color-background-rgb, 13, 17, 23), 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--border-radius-lg);
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  pointer-events: none;
+}
+
+.light-mode .processing-overlay {
+    background-color: rgba(var(--color-background-light-rgb, 246, 248, 250), 0.85);
+}
+
+.processing-overlay:not([hidden]) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.animation-container {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.node {
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    opacity: 0.2;
+    animation: pulse 2.5s infinite ease-in-out;
+}
+
+.processing-text {
+  margin-top: var(--space-lg);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  animation: text-fade 2.5s infinite ease-in-out;
+}
+
+/* Keyframe Animations */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(0.6);
+    opacity: 0.2;
+    box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.5);
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+    box-shadow: 0 0 15px 5px rgba(var(--color-primary-rgb), 0.3);
+  }
+}
+
+@keyframes text-fade {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* Stagger the node animation delays */
+.node:nth-child(1) { animation-delay: 0.1s; }
+.node:nth-child(2) { animation-delay: 0.6s; }
+.node:nth-child(3) { animation-delay: 0.2s; }
+.node:nth-child(4) { animation-delay: 0.7s; }
+
+.node:nth-child(5) { animation-delay: 0.8s; }
+.node:nth-child(6) { animation-delay: 0.3s; }
+.node:nth-child(7) { animation-delay: 0.9s; }
+.node:nth-child(8) { animation-delay: 0.4s; }
+
+.node:nth-child(9) { animation-delay: 0.2s; }
+.node:nth-child(10) { animation-delay: 0.7s; }
+.node:nth-child(11) { animation-delay: 0.1s; }
+.node:nth-child(12) { animation-delay: 0.8s; }
+
+.node:nth-child(13) { animation-delay: 0.5s; }
+.node:nth-child(14) { animation-delay: 0.1s; }
+.node:nth-child(15) { animation-delay: 0.6s; }
+.node:nth-child(16) { animation-delay: 0.3s; }

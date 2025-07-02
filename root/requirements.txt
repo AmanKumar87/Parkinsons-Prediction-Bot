@@ -1,0 +1,15 @@
+fastapi==0.111.0
+uvicorn==0.30.1
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.5.0 # Use scikit-learn, not sklearn
+joblib==1.4.2
+python-dotenv==1.0.1
+httpx==0.27.0
+parselmouth-praat==0.9.3 # The specific package name
+pydub==0.25.1
+nolds==0.5.2
+matplotlib==3.8.4
+seaborn==0.13.2
+imblearn==0.0 # For imbalanced-learn, use this placeholder or specific version
+imbalanced-learn==0.12.2 # Explicit version for imblearn if 0.0 causes issues

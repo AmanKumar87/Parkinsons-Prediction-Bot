@@ -1,0 +1,254 @@
+/* ==============================================
+   PRO STYLES: REPORT DASHBOARD (v2.3 - Final Layout)
+   ============================================== */
+
+/* --- 1. Report Page General Layout --- */
+.report-pro-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding-bottom: var(--space-xl);
+}
+
+.report-grid {
+    display: grid;
+    /* Defines a two-column grid: left column is 320px wide, right takes the rest */
+    grid-template-columns: 320px 1fr; 
+    gap: var(--space-xl);
+    align-items: flex-start;
+}
+
+/* --- 2. Main Result Card (Left Column) --- */
+.report-main-card {
+    background: var(--color-surface);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-border-subtle);
+    padding: var(--space-xl);
+    animation: slide-up-fade-in 0.5s var(--transition-smooth) backwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* Makes the card stick to the top when scrolling */
+    position: sticky; 
+    top: calc(var(--nav-height) + var(--space-xl));
+}
+
+.light-mode .report-main-card {
+    box-shadow: 0 10px 30px rgba(80, 80, 120, 0.08);
+}
+
+/* --- 3. Gauge Chart --- */
+.gauge-container {
+    position: relative;
+    width: 200px;
+    height: 110px;
+    margin-bottom: var(--space-lg);
+}
+
+.gauge-bg, .gauge-fill {
+    fill: none;
+    stroke-width: 22;
+    stroke-linecap: round;
+}
+
+.gauge-bg {
+    stroke: var(--color-code-bg);
+}
+
+.gauge-fill {
+    stroke: var(--color-primary);
+    transition: stroke-dashoffset 1.2s var(--transition-smooth);
+}
+
+.gauge-text {
+    font-family: var(--font-family-main);
+    font-size: 1.9rem;
+    font-weight: 700;
+    fill: var(--color-text-primary);
+}
+
+.gauge-label {
+    font-size: 1rem;
+    font-weight: 500;
+    fill: var(--color-text-secondary);
+}
+
+/* --- 4. Result Text & Summary --- */
+.result-heading {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.result-heading .icon {
+    font-size: 2rem;
+}
+
+.parkinsons-positive .result-heading { color: #e57373; }
+.parkinsons-negative .result-heading { color: #81c784; }
+
+.result-summary-text {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    max-width: 550px;
+    margin-top: var(--space-md);
+}
+
+/* --- 5. Detailed Analysis Section (Right Column) --- */
+.report-details-card {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-border-subtle);
+    animation: slide-up-fade-in 0.7s var(--transition-smooth) backwards;
+    /* Ensures the card contains its floated children */
+    overflow: hidden;
+}
+
+.report-details-card h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: var(--space-lg);
+    padding: var(--space-lg) var(--space-lg) 0;
+}
+
+.table-container {
+    overflow-x: auto; /* Allows table to be scrolled on small screens if needed */
+}
+
+#feature-table-pro {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#feature-table-pro thead tr {
+    border-bottom: 2px solid var(--color-border-subtle);
+}
+
+#feature-table-pro th {
+    text-align: left;
+    padding: var(--space-md) var(--space-lg);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#feature-table-pro tbody tr {
+    border-bottom: 1px solid var(--color-border-subtle);
+    transition: background-color var(--transition-fast);
+}
+
+#feature-table-pro tbody tr:last-child {
+    border-bottom: none;
+}
+
+#feature-table-pro tbody tr:hover {
+    background-color: var(--color-code-bg);
+}
+
+#feature-table-pro td {
+    padding: var(--space-md) var(--space-lg);
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+.value-cell {
+    font-family: var(--font-family-code);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.status-cell-pro {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-weight: 500;
+}
+
+.status-indicator-pro {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--border-radius-full);
+    flex-shrink: 0;
+}
+
+.value-in-range .status-indicator-pro { background-color: #81c784; }
+.value-out-of-range .status-indicator-pro { background-color: #e57373; }
+.value-in-range { color: #a5d6a7; }
+.value-out-of-range { color: #ef9a9a; }
+
+/* --- 6. Actions & Disclaimer (Styled inside the details card) --- */
+.report-actions-pro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    padding: var(--space-xl) var(--space-lg) 0;
+    border-top: 1px solid var(--color-border-subtle);
+}
+
+.action-btn-pro {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    font-family: var(--font-family-main);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.8rem var(--space-lg);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: 1px solid var(--color-border-subtle);
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+}
+.action-btn-pro:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+.action-btn-pro.primary {
+    background-color: var(--color-primary);
+    color: var(--color-text-on-primary);
+    border-color: var(--color-primary);
+    box-shadow: var(--glow-primary);
+}
+.action-btn-pro.primary:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 20px rgba(var(--color-primary-rgb), 0.5);
+    color: var(--color-text-on-primary);
+}
+.action-btn-pro i { font-size: 1.2rem; }
+
+.disclaimer-pro {
+    text-align: center;
+    padding: var(--space-lg);
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+/* --- 7. Responsive Layout --- */
+@media (max-width: 900px) {
+    .report-grid {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+    }
+    .report-main-card {
+        position: static; /* Unstick the card on mobile */
+    }
+}
+
+@media (max-width: 767px) {
+    .report-actions-pro {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

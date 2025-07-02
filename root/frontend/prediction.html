@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parkinson's AI Assistant | Prediction</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Main Stylesheets -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/prediction_styling.css" />
+  </head>
+  <body>
+    <!-- MAIN NAVIGATION -->
+    <nav class="main-nav">
+      <ul>
+        <li class="nav-bot-title">
+          <span class="nav-bot-title">Parkinson's AI Assistant</span>
+        </li>
+        <li class="nav-links"><a href="chatbot.html">Chatbot</a></li>
+        <li class="nav-links">
+          <a href="prediction.html" class="active">Get Prediction</a>
+        </li>
+        <li class="nav-links"><a href="report_dashboard.html">Previous Report</a></li>
+        <li class="nav-links">
+          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+            <i class="ph-bold ph-sun"></i>
+            <i class="ph-bold ph-moon"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <div class="prediction-container">
+        <!-- Page Title -->
+        <div class="page-title-container">
+          <h1>Vocal Analysis</h1>
+          <p>The simplest way to get a Parkinson's prediction is by analyzing your voice.</p>
+        </div>
+
+        <!-- Voice First Primary Action Container -->
+        <div class="voice-first-container" id="voice-first-container">
+          <canvas id="voice-visualizer" class="voice-visualizer"></canvas>
+          <i class="ph-duotone ph-waveform" id="waveform-icon"></i>
+          <h2 id="voice-container-title">Get Instant Analysis</h2>
+          <p id="voice-container-p">Record a short voice sample by reading a simple sentence. Our AI will extract all the required vocal features for you.</p>
+          <div class="voice-controls">
+            <button type="button" id="start-recording-btn" class="voice-btn record">
+              <i class="ph-bold ph-microphone"></i>
+              <span>Start Recording</span>
+            </button>
+            <button type="button" id="stop-recording-btn" class="voice-btn stop" disabled>
+              <i class="ph-bold ph-stop"></i>
+              <span>Stop Recording</span>
+            </button>
+          </div>
+          <p id="recording-status">Ready to record.</p>
+
+          <div class="manual-entry-trigger">
+            <button id="show-manual-form-btn" class="secondary-action-btn">Or, enter metrics manually</button>
+          </div>
+          
+          <!-- Processing Animation Overlay -->
+          <div id="processing-overlay" class="processing-overlay" hidden>
+            <div class="animation-container">
+              <div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div>
+              <div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div>
+              <div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div>
+              <div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div>
+            </div>
+            <p id="processing-text" class="processing-text">Analyzing your voiceprint...</p>
+          </div>
+        </div>
+
+        <!-- Hidden Manual Input Wrapper -->
+        <div class="manual-input-wrapper" id="manual-input-wrapper">
+          <form id="prediction-form" method="post" novalidate>
+            <!-- Accessible Tab Navigation with Arrows -->
+            <div class="tabs-header">
+                <button type="button" id="prev-tab-btn" class="tab-arrow-btn" aria-label="Previous category" disabled>
+                    <i class="ph-bold ph-caret-left"></i>
+                </button>
+                <div class="tabs-nav" role="tablist" aria-label="Vocal Metrics Categories">
+                    <button type="button" class="tab-nav-btn active" role="tab" aria-selected="true" aria-controls="tab-frequency" id="freq-tab-btn">Frequency</button>
+                    <button type="button" class="tab-nav-btn" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-jitter" id="jitter-tab-btn">Jitter</button>
+                    <button type="button" class="tab-nav-btn" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-shimmer" id="shimmer-tab-btn">Shimmer</button>
+                    <button type="button" class="tab-nav-btn" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-nonlinear" id="nonlinear-tab-btn">Nonlinear</button>
+                </div>
+                <button type="button" id="next-tab-btn" class="tab-arrow-btn" aria-label="Next category">
+                    <i class="ph-bold ph-caret-right"></i>
+                </button>
+            </div>
+
+            <div class="tabs-content">
+              <div class="tab-pane active" role="tabpanel" id="tab-frequency" aria-labelledby="freq-tab-btn">
+                <div class="form-grid">
+                  <div class="form-group"><label for="MDVP:Fo(Hz)">MDVP:Fo(Hz)</label><input type="number" id="MDVP:Fo(Hz)" name="MDVP:Fo(Hz)" step="any" required placeholder="e.g., 119.992" /><small>Avg. vocal fundamental frequency.</small></div>
+                  <div class="form-group"><label for="MDVP:Fhi(Hz)">MDVP:Fhi(Hz)</label><input type="number" id="MDVP:Fhi(Hz)" name="MDVP:Fhi(Hz)" step="any" required placeholder="e.g., 157.302" /><small>Max. vocal fundamental frequency.</small></div>
+                  <div class="form-group"><label for="MDVP:Flo(Hz)">MDVP:Flo(Hz)</label><input type="number" id="MDVP:Flo(Hz)" name="MDVP:Flo(Hz)" step="any" required placeholder="e.g., 74.997" /><small>Min. vocal fundamental frequency.</small></div>
+                </div>
+              </div>
+              <div class="tab-pane" role="tabpanel" id="tab-jitter" aria-labelledby="jitter-tab-btn" hidden>
+                <div class="form-grid"><div class="form-group"><label for="MDVP:Jitter(%)">MDVP:Jitter(%)</label><input type="number" id="MDVP:Jitter(%)" name="MDVP:Jitter(%)" step="any" required placeholder="e.g., 0.00784" /><small>Frequency variation in %</small></div><div class="form-group"><label for="MDVP:Jitter(Abs)">MDVP:Jitter(Abs)</label><input type="number" id="MDVP:Jitter(Abs)" name="MDVP:Jitter(Abs)" step="any" required placeholder="e.g., 0.00007" /><small>Absolute frequency variation.</small></div><div class="form-group"><label for="MDVP:RAP">MDVP:RAP</label><input type="number" id="MDVP:RAP" name="MDVP:RAP" step="any" required placeholder="e.g., 0.00370" /><small>Relative Amplitude Perturbation.</small></div><div class="form-group"><label for="MDVP:PPQ">MDVP:PPQ</label><input type="number" id="MDVP:PPQ" name="MDVP:PPQ" step="any" required placeholder="e.g., 0.00554" /><small>Five-point Period Perturbation.</small></div><div class="form-group"><label for="Jitter:DDP">Jitter:DDP</label><input type="number" id="Jitter:DDP" name="Jitter:DDP" step="any" required placeholder="e.g., 0.01109" /><small>Avg. abs. diff. of jitter.</small></div></div>
+              </div>
+              <div class="tab-pane" role="tabpanel" id="tab-shimmer" aria-labelledby="shimmer-tab-btn" hidden>
+                <div class="form-grid form-grid-four-cols"><div class="form-group"><label for="MDVP:Shimmer">MDVP:Shimmer</label><input type="number" id="MDVP:Shimmer" name="MDVP:Shimmer" step="any" required placeholder="e.g., 0.04374"/><small>Amplitude variation.</small></div><div class="form-group"><label for="MDVP:Shimmer(dB)">MDVP:Shimmer(dB)</label><input type="number" id="MDVP:Shimmer(dB)" name="MDVP:Shimmer(dB)" step="any" required placeholder="e.g., 0.426"/><small>Shimmer in decibels.</small></div><div class="form-group"><label for="Shimmer:APQ3">Shimmer:APQ3</label><input type="number" id="Shimmer:APQ3" name="Shimmer:APQ3" step="any" required placeholder="e.g., 0.02182"/><small>Three-point Amp. Perturbation.</small></div><div class="form-group"><label for="Shimmer:APQ5">Shimmer:APQ5</label><input type="number" id="Shimmer:APQ5" name="Shimmer:APQ5" step="any" required placeholder="e.g., 0.03130"/><small>Five-point Amp. Perturbation.</small></div><div class="form-group"><label for="MDVP:APQ">MDVP:APQ</label><input type="number" id="MDVP:APQ" name="MDVP:APQ" step="any" required placeholder="e.g., 0.02971"/><small>Eleven-point Amp. Perturbation.</small></div><div class="form-group"><label for="Shimmer:DDA">Shimmer:DDA</label><input type="number" id="Shimmer:DDA" name="Shimmer:DDA" step="any" required placeholder="e.g., 0.06545"/><small>Avg. abs. diff. of shimmer.</small></div></div>
+              </div>
+              <div class="tab-pane" role="tabpanel" id="tab-nonlinear" aria-labelledby="nonlinear-tab-btn" hidden>
+                <div class="form-grid form-grid-four-cols"><div class="form-group"><label for="NHR">NHR</label><input type="number" id="NHR" name="NHR" step="any" required placeholder="e.g., 0.02211"/><small>Noise-to-Harmonics Ratio.</small></div><div class="form-group"><label for="HNR">HNR</label><input type="number" id="HNR" name="HNR" step="any" required placeholder="e.g., 21.033"/><small>Harmonics-to-Noise Ratio.</small></div><div class="form-group"><label for="RPDE">RPDE</label><input type="number" id="RPDE" name="RPDE" step="any" required placeholder="e.g., 0.414783"/><small>Recurrence Period Density.</small></div><div class="form-group"><label for="DFA">DFA</label><input type="number"id="DFA" name="DFA" step="any" required placeholder="e.g., 0.815285"/><small>Detrended Fluctuation.</small></div><div class="form-group"><label for="spread1">spread1</label><input type="number" id="spread1" name="spread1" step="any" required placeholder="e.g., -4.813031"/><small>Nonlinear F0 variation 1.</small></div><div class="form-group"><label for="spread2">spread2</label><input type="number" id="spread2" name="spread2" step="any" required placeholder="e.g., 0.266482"/><small>Nonlinear F0 variation 2.</small></div><div class="form-group"><label for="D2">D2</label><input type="number" id="D2" name="D2" step="any" required placeholder="e.g., 2.301442"/><small>Correlation dimension.</small></div><div class="form-group"><label for="PPE">PPE</label><input type="number" id="PPE" name="PPE" step="any" required placeholder="e.g., 0.284654"/><small>Pitch Period Entropy.</small></div></div>
+              </div>
+            </div>
+            
+            <div class="pro-tip">
+              <i class="ph-duotone ph-lightbulb"></i>
+              <p><b>Pro Tip:</b> Use <kbd>Tab</kbd> to navigate through fields and <kbd>←</kbd> <kbd>→</kbd> keys to switch between metric categories.</p>
+            </div>
+
+            <div class="submission-area">
+              <button type="submit" class="submit-button">
+                <span>Get Prediction</span>
+                <i class="ph-bold ph-arrow-right"></i>
+              </button>
+            </div>
+            
+            <div id="error-message" class="error-message" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <script src="js/prediction.js"></script>
+  </body>
+</html>

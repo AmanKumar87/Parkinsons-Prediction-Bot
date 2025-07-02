@@ -1,0 +1,558 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ==============================================
+   DESIGN SYSTEM & GLOBAL STYLES (AI NeuroCare v2.1 - Polished)
+   ============================================== */
+
+/* --- 1. Root Variables (Dark Mode Default) --- */
+:root {
+  /* Color Palette: Professional, Calm, and Accessible */
+  --color-primary: #0a84ff;
+  --color-primary-rgb: 10, 132, 255;
+  --color-background: #0d1117;
+  --color-surface: #161b22;
+  --color-user-message-bg: var(--color-primary);
+  --color-text-primary: #e6edf3;
+  --color-text-secondary: #848d97;
+  --color-text-on-primary: #ffffff;
+  --color-border-subtle: rgba(230, 237, 243, 0.1);
+  --color-nav-glass: rgba(13, 17, 23, 0.75);
+  --color-code-bg: rgba(172, 185, 201, 0.1);
+  --color-blockquote-border: var(--color-primary);
+
+  /* Typography */
+  --font-family-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-code: 'SF Mono', 'Fira Code', 'monospace';
+
+  /* Spacing & Layout (Preserved from original) */
+  --nav-height: 60px;
+  --space-xs: 0.375rem;
+  --space-sm: 0.625rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --layout-max-width: 780px;
+
+  /* Border Radius */
+  --border-radius-sm: 8px;
+  --border-radius-md: 18px;
+  --border-radius-lg: 22px;
+  --border-radius-full: 50%;
+
+  /* Shadows & Glows */
+  --shadow-message: 0 5px 20px rgba(0, 0, 0, 0.25);
+  --shadow-input: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --glow-primary: 0 0 25px rgba(var(--color-primary-rgb), 0.5);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease-out;
+  --transition-smooth: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* --- 2. Light Mode Theme Override --- */
+.light-mode {
+  --color-background: #f6f8fa;
+  --color-surface: #ffffff;
+  --color-text-primary: #1f2328;
+  --color-text-secondary: #57606a;
+  --color-border-subtle: rgba(31, 35, 40, 0.15);
+  --color-nav-glass: rgba(255, 255, 255, 0.75);
+  --color-code-bg: rgba(31, 35, 40, 0.05);
+
+  --shadow-message: 0 5px 20px rgba(60, 60, 80, 0.08);
+  --shadow-input: 0 12px 35px rgba(80, 80, 120, 0.15);
+}
+
+
+/* --- 3. Global Resets & Base Styles --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px; /* Base font size for rem units, for better accessibility and scalability */
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-main);
+  line-height: 1.55; /* Optimal line height for general text readability */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility; /* Enhances text rendering for improved clarity */
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+/* ==============================================
+   CHATBOT PAGE STYLES
+   ============================================== */
+
+/* --- 4. Main Layout & Navigation (Preserved Structure) --- */
+.main-content {
+  position: relative;
+  width: 100%;
+  padding: 0 var(--space-md);
+  padding-top: calc(var(--nav-height) + var(--space-xl));
+  padding-bottom: 220px; /* Ample space for the fixed input area at the bottom */
+  overflow-y: auto;
+  height: 100vh;
+  scroll-behavior: smooth;
+  will-change: scroll-position;
+
+}
+
+.chat-container {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+}
+
+.main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--nav-height);
+  z-index: 100;
+  transition: background-color 0.3s ease,
+              -webkit-backdrop-filter 0.3s ease,
+              backdrop-filter 0.3s ease;
+}
+
+.main-nav.scrolled {
+    background-color: var(--color-nav-glass);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.main-nav ul {
+  height: 100%;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.main-nav a {
+  position: relative;
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem; /* Consistent smaller font for navigation items */
+  font-weight: 500;
+  transition: color var(--transition-fast);
+  padding-bottom: var(--space-xs);
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.main-nav a:hover, .main-nav a.active {
+  color: var(--color-text-primary);
+}
+.main-nav a:hover::after, .main-nav a.active::after {
+    transform: scaleX(1);
+}
+
+/* --- 5. Page Title (Preserved Structure with New Style) --- */
+.page-title-container {
+    text-align: left;
+    margin-bottom: var(--space-xl);
+}
+.page-title-container h1 {
+    font-size: 2.6rem; /* Large and impactful heading for primary attention */
+    font-weight: 700;
+    margin-bottom: 0.3em;
+    background: linear-gradient(45deg, var(--color-primary) 0%, var(--color-text-primary) 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.page-title-container p {
+    font-size: 0.95rem; /* Subtitle font size for good readability */
+    color: var(--color-text-secondary);
+}
+
+
+/* --- 6. Chat Box & Messages --- */
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg); /* Space between distinct message groups */
+}
+
+@keyframes slide-up-fade-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.message-wrapper {
+    display: flex;
+    align-items: flex-end; /* Aligns icons with the bottom of the message bubble */
+    gap: var(--space-sm);
+    max-width: 85%; /* Limiting message width for optimal line length and readability */
+    animation: slide-up-fade-in var(--transition-smooth); /* Retained animation */
+}
+.message-wrapper.user { align-self: flex-end; flex-direction: row-reverse; }
+.message-wrapper.bot { align-self: flex-start; }
+
+.message-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem; /* Icon size */
+    border: 1px solid var(--color-border-subtle);
+    background-color: var(--color-surface);
+    color: var(--color-text-secondary);
+    transition: all var(--transition-fast);
+}
+.user .message-icon {
+    background-color: var(--color-primary);
+    color: var(--color-text-on-primary);
+    border-color: transparent; /* No border for user icon */
+    box-shadow: var(--glow-primary);
+}
+
+.message {
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-message);
+  word-wrap: break-word; /* Ensures long words wrap correctly within the bubble */
+  font-weight: 500;
+  font-size: 1rem; /* Standard message font size for clarity */
+  line-height: 1.6; /* Slightly increased line-height for better message readability */
+}
+.bot-message {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border-bottom-left-radius: var(--space-xs); /* Distinct rounded corner for bot messages */
+}
+.user-message {
+  background-color: var(--color-user-message-bg);
+  color: var(--color-text-on-primary);
+  border-bottom-right-radius: var(--space-xs); /* Distinct rounded corner for user messages */
+  box-shadow: var(--glow-primary);
+}
+
+/* --- 7. Markdown Content Formatting --- */
+.bot-message h1, .bot-message h2, .bot-message h3 {
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-sm);
+    font-weight: 600; /* Slightly bolder for section headings */
+    line-height: 1.3; /* Tighter line height for headings */
+}
+.bot-message h1 { font-size: 1.5em; } /* Relative sizing for markdown headings */
+.bot-message h2 { font-size: 1.3em; }
+.bot-message h3 { font-size: 1.1em; }
+.bot-message p { /* Ensures consistent paragraph spacing */
+  margin-bottom: var(--space-md);
+}
+.bot-message p:last-child { margin-bottom: 0; } /* Removes bottom margin for the last paragraph */
+
+.bot-message ul, .bot-message ol {
+  padding-left: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+.bot-message li {
+  margin-bottom: var(--space-xs);
+  line-height: 1.5; /* Ensures readability for list items */
+}
+.bot-message a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  font-weight: 500;
+}
+.bot-message blockquote {
+    margin: var(--space-md) 0;
+    padding: var(--space-sm) var(--space-md);
+    border-left: 3px solid var(--color-blockquote-border);
+    background-color: rgba(var(--color-primary-rgb), 0.05);
+    color: var(--color-text-secondary);
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    line-height: 1.5; /* Ensures readability for blockquote text */
+}
+.light-mode .bot-message blockquote { background-color: rgba(0,0,0,0.02); }
+
+.bot-message code {
+    background-color: var(--color-code-bg);
+    padding: 0.2em 0.4em;
+    font-size: 85%; /* Slightly smaller for inline code for visual distinction */
+    border-radius: var(--border-radius-sm);
+    font-family: var(--font-family-code);
+    white-space: nowrap; /* Prevents inline code from wrapping prematurely */
+}
+.bot-message pre {
+    background-color: var(--color-code-bg);
+    padding: var(--space-md);
+    border-radius: var(--border-radius-sm);
+    overflow-x: auto; /* Essential for horizontally scrollable code blocks */
+    margin-bottom: var(--space-md);
+    line-height: 1.4; /* Slightly tighter line height for code blocks */
+}
+.bot-message pre code {
+  padding: 0;
+  background: none;
+  font-size: 100%; /* Restores original font size for code within pre */
+  white-space: pre; /* Ensures proper rendering of code within blocks */
+}
+
+
+/* --- 8. SVG Loading Animation (Refined) --- */
+.loader-container {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loader-svg { /* This targets the SVG container */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    fill: none;
+}
+.loader-svg.blur { /* This targets the specific blurred SVG container */
+    filter: blur(5px);
+    opacity: 0.9; /* Base opacity for the blurred element */
+}
+.loader-svg path { /* This targets ALL paths within any .loader-svg */
+    stroke-width: 7; /* Base stroke width, will be animated */
+    stroke-linecap: round;
+    animation: animate-loader 1.8s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+}
+
+@keyframes animate-loader {
+    0% {
+        stroke: var(--color-primary); /* Base Primary Blue: #0a84ff */
+        d: path("M5,12 C15,28 35,-8 45,12");
+        stroke-width: 7; /* Initial width */
+    }
+    20% {
+        stroke: #42a8ff; /* A slightly brighter, yet soft blue */
+        stroke-width: 7.5; /* Subtle increase for bulging */
+    }
+    40% {
+        stroke: #33d7ff; /* Existing vibrant distinct blue */
+        stroke-width: 8.5; /* Further increase */
+    }
+    50% {
+        d: path("M5,12 C20,-12 30,32 45,12"); /* More exaggerated path */
+        stroke: #33d7ff; /* Keep vibrant blue at peak */
+        stroke-width: 9; /* Maximum bulging width */
+    }
+    60% {
+        stroke: #007bff; /* A slightly deeper blue than primary */
+        stroke-width: 8.5; /* Decrease as it recedes */
+    }
+    80% {
+        stroke: #0056b3; /* Even deeper blue */
+        stroke-width: 7.5; /* Further decrease */
+    }
+    100% {
+        stroke: var(--color-primary); /* Returns to base Primary Blue */
+        d: path("M5,12 C15,28 35,-8 45,12");
+        stroke-width: 7; /* Back to initial width */
+    }
+}
+
+/* Specific styling for the path *inside* the blurred SVG to make it a "thread" */
+.loader-svg.blur path {
+    stroke-width: 3; /* Override to make it significantly thinner, creating the "thread" effect */
+    opacity: 0.7; /* Slightly lower opacity for a more ethereal, subtle thread */
+    /* The stroke color animation from animate-loader will still apply here,
+       giving it "shades of blue" as it moves along the same path. */
+}
+
+/* --- 9. Dynamic Suggestion Cards & Test Now Button Area --- */
+.suggestion-cards {
+  display: flex; flex-wrap: wrap; gap: var(--space-sm);
+  padding-top: var(--space-md); animation: slide-up-fade-in var(--transition-smooth); /* Preserved animation */
+  padding-left: calc(40px + var(--space-sm)); /* Aligns cards with bot message content */
+  align-items: center;
+}
+.suggestion-card {
+  background-color: var(--color-surface); color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-subtle); border-radius: var(--border-radius-md);
+  padding: 0.6rem var(--space-md); font-family: var(--font-family-main);
+  font-size: 0.9rem; font-weight: 500; cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.suggestion-card:hover {
+  background-color: var(--color-primary); border-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+  transform: translateY(-2px); /* Subtle lift on hover for better interaction feedback */
+  box-shadow: var(--glow-primary);
+}
+
+/* --- 10. Theme Toggle & Dynamic Nav Title --- */
+.nav-bot-title {
+    font-size: 1.1rem; font-weight: 600; color: var(--color-primary);
+    opacity: 0; transform: translateY(5px);
+    transition: all 0.3s ease-out; margin-right: auto;
+    text-shadow: var(--glow-primary);
+}
+.main-nav.scrolled .nav-bot-title { opacity: 1; transform: translateY(0); }
+.theme-toggle-btn {
+    background: none; border: none; color: var(--color-text-secondary);
+    cursor: pointer; font-size: 1.3rem; padding: 0; position: relative;
+    width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+}
+.theme-toggle-btn:hover { color: var(--color-primary); }
+.theme-toggle-btn i { position: absolute; transition: transform var(--transition-smooth), opacity 0.3s ease-in-out; }
+.theme-toggle-btn .ph-sun { transform: scale(1) rotate(0deg); opacity: 1; }
+.theme-toggle-btn .ph-moon { transform: scale(0) rotate(-90deg); opacity: 0; }
+.light-mode .theme-toggle-btn .ph-sun { transform: scale(0) rotate(90deg); opacity: 0; }
+.light-mode .theme-toggle-btn .ph-moon { transform: scale(1) rotate(0deg); opacity: 1; }
+
+/* --- 11. PRESERVED "Test Now" Button Styling --- */
+.btn-53-link { text-decoration: none; }
+.btn-53, .btn-53 *, .btn-53 :after, .btn-53 :before, .btn-53:after, .btn-53:before {
+  border: 0 solid; box-sizing: border-box;
+}
+.btn-53 {
+  -webkit-tap-highlight-color: transparent; -webkit-appearance: button;
+  background-color: var(--color-surface); color: var(--color-text-primary);
+  cursor: pointer; padding: 0; font-weight: 600; text-transform: uppercase;
+  border-radius: 100px; position: relative; overflow: hidden;
+  font-family: var(--font-family-main); font-size: 0.8rem;
+  line-height: 1.2rem; border: 1px solid var(--color-border-subtle);
+  transition: all var(--transition-fast); height: 40px; width: 140px;
+}
+.btn-53:hover { border-color: var(--color-primary); }
+.btn-53 .original {
+  background-color: var(--color-primary); color: var(--color-text-on-primary);
+  position: absolute; inset: 0; display: grid; place-content: center;
+  transition: transform 0.3s cubic-bezier(0.87, 0, 0.13, 1);
+}
+.btn-53:hover .original { transform: translateY(100%); }
+.btn-53 .letters { display: inline-flex; height: 100%; align-items: center; justify-content: center;}
+.btn-53 span {
+  opacity: 0; transform: translateY(-15px);
+  transition: opacity 0.2s, transform 0.2s cubic-bezier(0.87, 0, 0.13, 1);
+}
+.btn-53:hover span { opacity: 1; transform: translateY(0); }
+.btn-53:hover span:nth-child(1) { transition-delay: 0.05s; }
+.btn-53:hover span:nth-child(2) { transition-delay: 0.1s; }
+.btn-53:hover span:nth-child(3) { transition-delay: 0.15s; }
+.btn-53:hover span:nth-child(4) { transition-delay: 0.2s; }
+.btn-53:hover span:nth-child(5) { transition-delay: 0.25s; }
+.btn-53:hover span:nth-child(6) { transition-delay: 0.3s; }
+.btn-53:hover span:nth-child(7) { transition-delay: 0.35s; }
+.btn-53:hover span:nth-child(8) { transition-delay: 0.4s; }
+
+/* --- 12. Floating Chat Input --- */
+.chat-input-wrapper {
+  position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
+  display: flex; justify-content: center; align-items: flex-end;
+  height: 180px; padding: 0 var(--space-md) var(--space-lg);
+  pointer-events: none; z-index: 50;
+}
+.chat-input-wrapper::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient( to top, var(--color-background) 45%, rgba(13, 17, 23, 0.8) 85%, transparent 100% );
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    -webkit-mask-image: linear-gradient(to top, black 25%, transparent 100%);
+    mask-image: linear-gradient(to top, black 25%, transparent 100%);
+    transition: background var(--transition-fast);
+}
+.light-mode .chat-input-wrapper::before {
+    background: linear-gradient( to top, var(--color-background) 45%, rgba(246, 248, 250, 0.8) 85%, transparent 100% );
+}
+.chat-input-area {
+  display: flex; align-items: center; width: 100%;
+  max-width: var(--layout-max-width); margin: 0 auto;
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-md);
+  box-shadow: var(--shadow-input);
+  border: 1px solid var(--color-border-subtle);
+  pointer-events: auto; position: relative; z-index: 10;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.chat-input-area:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(var(--color-primary-rgb), 0.3), var(--shadow-input);
+}
+.chat-input-area input {
+  flex-grow: 1; border: none; background: transparent;
+  font-size: 0.95rem; color: var(--color-text-primary);
+  font-family: var(--font-family-main); font-weight: 500; height: 42px;
+}
+.chat-input-area input::placeholder { color: var(--color-text-secondary); opacity: 0.8; /* Subtle transparency for placeholder text */ }
+.chat-input-area input:focus { outline: none; }
+.chat-input-area button {
+  flex-shrink: 0; width: 38px; height: 38px; border: none;
+  border-radius: 14px; background-color: var(--color-primary);
+  color: var(--color-text-on-primary); font-size: 1.4rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition-fast);
+}
+.chat-input-area button:hover {
+  transform: scale(1.05);
+  box-shadow: var(--glow-primary);
+}
+
+/* --- 13. Responsive Design --- */
+@media (max-width: 768px) {
+  .main-content {
+    padding-bottom: 150px; /* Adjust padding for medium screens */
+    padding-left: var(--space-sm); /* Slightly reduced horizontal padding */
+    padding-right: var(--space-sm);
+  }
+  .page-title-container { text-align: center; }
+  .page-title-container h1 { font-size: 2.2rem; }
+  .page-title-container p { font-size: 1.05rem; }
+  .message-wrapper { max-width: 95%; }
+  .chat-input-wrapper { padding-bottom: var(--space-md); height: 140px; }
+  .chat-input-area { /* Slightly adjust input area padding for mobile */
+      padding: var(--space-xs) var(--space-sm) var(--space-xs) var(--space-md);
+  }
+}
+
+@media (max-width: 480px) { /* Additional breakpoint for very small mobile devices */
+    .page-title-container h1 { font-size: 1.8rem; }
+    .page-title-container p { font-size: 1rem; }
+    .message-icon { width: 32px; height: 32px; font-size: 1.1rem; } /* Smaller icons on tiny screens */
+    .message {
+        padding: var(--space-sm); /* Reduced padding for messages on very small screens */
+        font-size: 0.9rem;
+    }
+    .suggestion-cards {
+      padding-left: calc(32px + var(--space-sm)); /* Adjusted based on new icon size */
+      gap: var(--space-xs); /* Smaller gap for cards on tiny screens */
+    }
+    .suggestion-card {
+      font-size: 0.85rem;
+      padding: 0.5rem var(--space-sm);
+    }
+    .chat-input-area input {
+      font-size: 0.9rem; /* Slightly smaller input font size */
+      height: 38px;
+    }
+    .chat-input-area button {
+      width: 32px; height: 32px; font-size: 1.2rem; /* Smaller send button */
+    }
+    .main-nav ul { gap: var(--space-sm); } /* Reduce nav item gap on small screens */
+    .main-nav a { font-size: 0.8rem; } /* Smaller nav font size on small screens */
+}
